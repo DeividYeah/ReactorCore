@@ -1,6 +1,6 @@
 import CountryCard from './CountryCard.jsx'
 
-function CountryList({ paises }) {
+function CountryList({ paises, favoritos, onToggleFavorito }) {
   if (paises.length === 0) {
     return <p>No hay países que coincidan.</p>
   }
@@ -9,7 +9,12 @@ function CountryList({ paises }) {
     <ul className="lista">
       {paises.map((pais) => (
         // cca3 es el código del país (ESP, FRA...): único y estable
-        <CountryCard key={pais.cca3} pais={pais} />
+        <CountryCard
+          key={pais.cca3}
+          pais={pais}
+          esFavorito={favoritos.includes(pais.cca3)}
+          onToggleFavorito={onToggleFavorito}
+        />
       ))}
     </ul>
   )

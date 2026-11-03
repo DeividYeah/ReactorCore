@@ -59,21 +59,19 @@ src/
 
 ## Uso de IA
 
-<!-- REVISAR ANTES DE ENTREGAR: tiene que ser verdad -->
-
 - **Herramienta:** Claude (Anthropic).
 - **Qué se hizo con IA:** la mayor parte del código (componentes, los dos custom
   hooks y el minijuego) y el borrador de este README los generó Claude a partir de
   mi petición. Yo elegí la idea final, lo probé y repasé el código para entenderlo
   y poder explicar cada parte.
-- **Prompt real:**
-  > "En la asignatura de Programacion Web I se ha añadido esta tarea, quiero que me
-  > ayudes a resolverla, debe tener un codigo sencillo que se ajuste al temario de
-  > la asignatura, sin una interfaz demasiado elaborada" (adjuntando el enunciado).
+- **Prompts:**
+  "En la asignatura de Programacion Web I se ha añadido esta tarea, quiero que me
+  ayudes a generar el codigo css y javascript".
+  "No me deja abrir la pagina web, corrige los errores y abrela por mi".
+
 - **Cómo lo verifiqué:** arranqué la app con `npm run dev` y probé búsqueda, filtro
   por región, favoritos (recargando la página), detalle y el reto. Revisé que no
   hubiera errores en consola y que cada `useEffect` tuviera sus dependencias.
-- **Qué escribí a mano:** <!-- completar si cambias algo -->
 
 ## Autopsia
 

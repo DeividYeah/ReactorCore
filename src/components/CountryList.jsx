@@ -8,11 +8,11 @@ function CountryList({ paises, favoritos, onToggleFavorito, onVerDetalle }) {
   return (
     <ul className="lista">
       {paises.map((pais) => (
-        // cca3 es el código del país (ESP, FRA...): único y estable
+        // codigo es el código ISO del país (ESP, FRA...): único y estable
         <CountryCard
-          key={pais.cca3}
+          key={pais.codigo}
           pais={pais}
-          esFavorito={favoritos.includes(pais.cca3)}
+          esFavorito={favoritos.includes(pais.codigo)}
           onToggleFavorito={onToggleFavorito}
           onVerDetalle={onVerDetalle}
         />

@@ -19,16 +19,16 @@ function PopulationChallenge({ paises }) {
 
   function elegir(elegido) {
     const otro = pareja[0] === elegido ? pareja[1] : pareja[0]
-    const fmt = (p) => `${p.nombre} (${p.population.toLocaleString('es-ES')})`
+    const texto = (p) => `${p.nombre} (${p.poblacion.toLocaleString('es-ES')})`
 
-    if (elegido.population >= otro.population) {
+    if (elegido.poblacion >= otro.poblacion) {
       const nuevaRacha = racha + 1
       setRacha(nuevaRacha)
       if (nuevaRacha > record) setRecord(nuevaRacha)
-      setMensaje(`¡Bien! ${fmt(elegido)} > ${fmt(otro)}`)
+      setMensaje(`¡Bien! ${texto(elegido)} > ${texto(otro)}`)
     } else {
       setRacha(0)
-      setMensaje(`Fallo: ${fmt(otro)} > ${fmt(elegido)}`)
+      setMensaje(`Fallo: ${texto(otro)} > ${texto(elegido)}`)
     }
     setPareja(parejaAleatoria(paises))
   }
@@ -39,14 +39,11 @@ function PopulationChallenge({ paises }) {
       <p>
         Racha: {racha} · Récord: {record}
       </p>
-      <div className="lista">
-        {pareja.map((pais) => (
-          <button key={pais.cca3} className="tarjeta" onClick={() => elegir(pais)}>
-            <img src={pais.flags.png} alt={pais.flags.alt || `Bandera de ${pais.nombre}`} />
-            <h3>{pais.nombre}</h3>
-          </button>
-        ))}
-      </div>
+      {pareja.map((pais) => (
+        <button key={pais.codigo} onClick={() => elegir(pais)}>
+          {pais.nombre}
+        </button>
+      ))}
       {mensaje && <p>{mensaje}</p>}
     </section>
   )

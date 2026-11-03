@@ -1,4 +1,4 @@
-const REGIONES = ['Todas', 'Africa', 'Americas', 'Asia', 'Europe', 'Oceania', 'Antarctic']
+const REGIONES = ['Todas', 'África', 'América', 'Asia', 'Europa', 'Oceanía', 'Antártida']
 
 function RegionFilter({ valor, onCambiar }) {
   return (

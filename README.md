@@ -17,7 +17,7 @@ npm run dev
 ```
 
 Y abrir la URL que muestra Vite (normalmente http://localhost:5173).
-Las banderas se cargan de flagcdn.com, así que hace falta internet para verlas.
+No necesita internet: los datos están en `public/paises.json`.
 
 ## Estructura
 
@@ -31,7 +31,7 @@ src/
   components/
     SearchBar.jsx          input de búsqueda (controlado)
     RegionFilter.jsx       select de región (controlado)
-    CountryList.jsx        lista con key = cca3
+    CountryList.jsx        lista con key = codigo
     CountryCard.jsx        tarjeta de un país
     CountryDetail.jsx      ficha de detalle
     PopulationChallenge.jsx  minijuego de población
@@ -40,9 +40,10 @@ src/
 ## Decisiones
 
 - **Datos en `public/paises.json`.** Al principio usaba la API de REST Countries,
-  pero dejó de responder ("Failed to fetch"). Guardé una copia de sus datos
-  (versión v2, con población de 2020 aprox.) en `public/` y la pido con el mismo `useFetch`,
-  así que el efecto, la carga y el error siguen funcionando igual.
+  pero dejó de responder ("Failed to fetch"). Guardé en `public/` una copia simplificada
+  de sus datos (población de 2020 aprox.) y la pido con el mismo `useFetch`, así que el
+  efecto, la carga y el error siguen funcionando igual. También quité las banderas,
+  que se cargaban de otra web, para que la app no dependa de nada externo.
 
 - **Estado mínimo.** En `App` solo viven la búsqueda, la región, el modo, el filtro
   de favoritos, los códigos favoritos y el código del país seleccionado. La lista
@@ -52,7 +53,7 @@ src/
   `onToggleFavorito`, `onVerDetalle`).
 - **Efectos solo para sistemas externos:** la petición HTTP (`useFetch`, con cleanup
   que aborta la petición), `localStorage` (`useLocalStorage`) y el título de la pestaña.
-- **Keys estables:** se usa `cca3` (código ISO del país), nunca el índice.
+- **Keys estables:** se usa `codigo` (código ISO del país: ESP, FRA...), nunca el índice.
 - **Reto bonus:** dos custom hooks, y `useLocalStorage` se reutiliza para favoritos y récord.
 
 ## Uso de IA

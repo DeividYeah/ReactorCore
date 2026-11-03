@@ -7,16 +7,16 @@ import CountryList from './components/CountryList.jsx'
 import CountryDetail from './components/CountryDetail.jsx'
 import PopulationChallenge from './components/PopulationChallenge.jsx'
 
-// Datos locales en public/ (la API de REST Countries no responde)
-const URL_API = '/paises.json'
+// Los datos están en public/paises.json, así no dependemos de una API externa
+const URL_DATOS = '/paises.json'
 
 function App() {
-  const { datos, cargando, error } = useFetch(URL_API)
+  const { datos, cargando, error } = useFetch(URL_DATOS)
   const [busqueda, setBusqueda] = useState('')
   const [region, setRegion] = useState('Todas')
   const [modo, setModo] = useState('explorar') // 'explorar' | 'reto'
   const [soloFavoritos, setSoloFavoritos] = useState(false)
-  // Solo guardamos los códigos (cca3), no los países enteros
+  // Solo guardamos los códigos (ESP, FRA...), no los países enteros
   const [favoritos, setFavoritos] = useLocalStorage('favoritos', [])
   // Guardamos solo el código del país seleccionado, el objeto se deriva
   const [codigoSeleccionado, setCodigoSeleccionado] = useState(null)
@@ -36,18 +36,17 @@ function App() {
   if (error) return <p className="error">No se pudieron cargar los países: {error}</p>
 
   // Valores derivados: se calculan en cada render, no se guardan en estado
-  const paises = datos
-    .map((p) => ({ ...p, nombre: p.translations?.spa?.common ?? p.name.common }))
-    .sort((a, b) => a.nombre.localeCompare(b.nombre))
+  // (copiamos con [...datos] para no modificar el array original al ordenar)
+  const paises = [...datos].sort((a, b) => a.nombre.localeCompare(b.nombre))
 
   const paisesFiltrados = paises.filter(
     (p) =>
       p.nombre.toLowerCase().includes(busqueda.toLowerCase()) &&
       (region === 'Todas' || p.region === region) &&
-      (!soloFavoritos || favoritos.includes(p.cca3))
+      (!soloFavoritos || favoritos.includes(p.codigo))
   )
 
-  const paisSeleccionado = paises.find((p) => p.cca3 === codigoSeleccionado)
+  const paisSeleccionado = paises.find((p) => p.codigo === codigoSeleccionado)
 
   return (
     <main>

@@ -1,7 +1,7 @@
 # Reactor Core · Explorador de países
 
 Misión M3 de Programación Web I (U-tad). App en **React 19 + Vite** que carga
-los países de la API pública [REST Countries](https://restcountries.com) y permite:
+un listado de 250 países con `fetch` y permite:
 
 - Buscar por nombre (en español) y filtrar por región.
 - Marcar países como favoritos (se guardan en `localStorage`) y ver solo los favoritos.
@@ -17,7 +17,7 @@ npm run dev
 ```
 
 Y abrir la URL que muestra Vite (normalmente http://localhost:5173).
-Hace falta conexión a internet para la API.
+Las banderas se cargan de flagcdn.com, así que hace falta internet para verlas.
 
 ## Estructura
 
@@ -38,6 +38,11 @@ src/
 ```
 
 ## Decisiones
+
+- **Datos en `public/paises.json`.** Al principio usaba la API de REST Countries,
+  pero dejó de responder ("Failed to fetch"). Guardé una copia de sus datos
+  (versión v2, con población de 2020 aprox.) en `public/` y la pido con el mismo `useFetch`,
+  así que el efecto, la carga y el error siguen funcionando igual.
 
 - **Estado mínimo.** En `App` solo viven la búsqueda, la región, el modo, el filtro
   de favoritos, los códigos favoritos y el código del país seleccionado. La lista

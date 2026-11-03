@@ -7,8 +7,8 @@ import CountryList from './components/CountryList.jsx'
 import CountryDetail from './components/CountryDetail.jsx'
 import PopulationChallenge from './components/PopulationChallenge.jsx'
 
-const URL_API =
-  'https://restcountries.com/v3.1/all?fields=name,translations,cca3,capital,region,population,area,flags,languages'
+// Datos locales en public/ (la API de REST Countries no responde)
+const URL_API = '/paises.json'
 
 function App() {
   const { datos, cargando, error } = useFetch(URL_API)

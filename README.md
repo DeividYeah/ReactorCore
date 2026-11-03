@@ -17,13 +17,14 @@ npm run dev
 ```
 
 Y abrir la URL que muestra Vite (normalmente http://localhost:5173).
-No necesita internet: los datos están en `public/paises.json`.
+No necesita internet: los datos están en `src/paises.json`.
 
 ## Estructura
 
 ```
 src/
   main.jsx                 punto de entrada
+  paises.json              datos de los 250 países
   App.jsx                  estado principal y valores derivados
   hooks/
     useFetch.js            custom hook: petición con AbortController
@@ -39,8 +40,8 @@ src/
 
 ## Decisiones
 
-- **Datos en `public/paises.json`.** Al principio usaba la API de REST Countries,
-  pero dejó de responder ("Failed to fetch"). Guardé en `public/` una copia simplificada
+- **Datos en `src/paises.json`.** Al principio usaba la API de REST Countries,
+  pero dejó de responder ("Failed to fetch"). Guardé en `src/paises.json` una copia simplificada
   de sus datos (población de 2020 aprox.) y la pido con el mismo `useFetch`, así que el
   efecto, la carga y el error siguen funcionando igual. También quité las banderas,
   que se cargaban de otra web, para que la app no dependa de nada externo.

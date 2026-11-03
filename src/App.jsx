@@ -6,9 +6,9 @@ import RegionFilter from './components/RegionFilter.jsx'
 import CountryList from './components/CountryList.jsx'
 import CountryDetail from './components/CountryDetail.jsx'
 import PopulationChallenge from './components/PopulationChallenge.jsx'
-
-// Los datos están en public/paises.json, así no dependemos de una API externa
-const URL_DATOS = '/paises.json'
+// Con "?url" Vite nos da la ruta del archivo (no su contenido), y lo pedimos con fetch.
+// Así no dependemos de una API externa.
+import URL_DATOS from './paises.json?url'
 
 function App() {
   const { datos, cargando, error } = useFetch(URL_DATOS)

@@ -1,6 +1,6 @@
 import CountryCard from './CountryCard.jsx'
 
-function CountryList({ paises, favoritos, onToggleFavorito }) {
+function CountryList({ paises, favoritos, onToggleFavorito, onVerDetalle }) {
   if (paises.length === 0) {
     return <p>No hay países que coincidan.</p>
   }
@@ -14,6 +14,7 @@ function CountryList({ paises, favoritos, onToggleFavorito }) {
           pais={pais}
           esFavorito={favoritos.includes(pais.cca3)}
           onToggleFavorito={onToggleFavorito}
+          onVerDetalle={onVerDetalle}
         />
       ))}
     </ul>

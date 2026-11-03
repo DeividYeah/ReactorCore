@@ -4,6 +4,7 @@ import { useLocalStorage } from './hooks/useLocalStorage.js'
 import SearchBar from './components/SearchBar.jsx'
 import RegionFilter from './components/RegionFilter.jsx'
 import CountryList from './components/CountryList.jsx'
+import CountryDetail from './components/CountryDetail.jsx'
 
 const URL_API =
   'https://restcountries.com/v3.1/all?fields=name,translations,cca3,capital,region,population,area,flags,languages'
@@ -15,6 +16,8 @@ function App() {
   const [soloFavoritos, setSoloFavoritos] = useState(false)
   // Solo guardamos los códigos (cca3), no los países enteros
   const [favoritos, setFavoritos] = useLocalStorage('favoritos', [])
+  // Guardamos solo el código del país seleccionado, el objeto se deriva
+  const [codigoSeleccionado, setCodigoSeleccionado] = useState(null)
 
   // El título de la pestaña muestra cuántos favoritos hay
   useEffect(() => {
@@ -42,6 +45,8 @@ function App() {
       (!soloFavoritos || favoritos.includes(p.cca3))
   )
 
+  const paisSeleccionado = paises.find((p) => p.cca3 === codigoSeleccionado)
+
   return (
     <main>
       <h1>Explorador de países</h1>
@@ -55,11 +60,15 @@ function App() {
         />
         Solo favoritos ({favoritos.length})
       </label>
+      {paisSeleccionado && (
+        <CountryDetail pais={paisSeleccionado} onCerrar={() => setCodigoSeleccionado(null)} />
+      )}
       <p>Mostrando {paisesFiltrados.length} de {paises.length} países</p>
       <CountryList
         paises={paisesFiltrados}
         favoritos={favoritos}
         onToggleFavorito={toggleFavorito}
+        onVerDetalle={setCodigoSeleccionado}
       />
     </main>
   )

@@ -5,6 +5,7 @@ import SearchBar from './components/SearchBar.jsx'
 import RegionFilter from './components/RegionFilter.jsx'
 import CountryList from './components/CountryList.jsx'
 import CountryDetail from './components/CountryDetail.jsx'
+import PopulationChallenge from './components/PopulationChallenge.jsx'
 
 const URL_API =
   'https://restcountries.com/v3.1/all?fields=name,translations,cca3,capital,region,population,area,flags,languages'
@@ -13,6 +14,7 @@ function App() {
   const { datos, cargando, error } = useFetch(URL_API)
   const [busqueda, setBusqueda] = useState('')
   const [region, setRegion] = useState('Todas')
+  const [modo, setModo] = useState('explorar') // 'explorar' | 'reto'
   const [soloFavoritos, setSoloFavoritos] = useState(false)
   // Solo guardamos los códigos (cca3), no los países enteros
   const [favoritos, setFavoritos] = useLocalStorage('favoritos', [])
@@ -50,26 +52,43 @@ function App() {
   return (
     <main>
       <h1>Explorador de países</h1>
-      <SearchBar valor={busqueda} onCambiar={setBusqueda} />
-      <RegionFilter valor={region} onCambiar={setRegion} />
-      <label>
-        <input
-          type="checkbox"
-          checked={soloFavoritos}
-          onChange={(e) => setSoloFavoritos(e.target.checked)}
-        />
-        Solo favoritos ({favoritos.length})
-      </label>
-      {paisSeleccionado && (
-        <CountryDetail pais={paisSeleccionado} onCerrar={() => setCodigoSeleccionado(null)} />
+      <nav>
+        <button onClick={() => setModo('explorar')} disabled={modo === 'explorar'}>
+          Explorar
+        </button>
+        <button onClick={() => setModo('reto')} disabled={modo === 'reto'}>
+          Reto de población
+        </button>
+      </nav>
+
+      {modo === 'reto' ? (
+        <PopulationChallenge paises={paises} />
+      ) : (
+        <>
+          <SearchBar valor={busqueda} onCambiar={setBusqueda} />
+          <RegionFilter valor={region} onCambiar={setRegion} />
+          <label>
+            <input
+              type="checkbox"
+              checked={soloFavoritos}
+              onChange={(e) => setSoloFavoritos(e.target.checked)}
+            />
+            Solo favoritos ({favoritos.length})
+          </label>
+          {paisSeleccionado && (
+            <CountryDetail pais={paisSeleccionado} onCerrar={() => setCodigoSeleccionado(null)} />
+          )}
+          <p>
+            Mostrando {paisesFiltrados.length} de {paises.length} países
+          </p>
+          <CountryList
+            paises={paisesFiltrados}
+            favoritos={favoritos}
+            onToggleFavorito={toggleFavorito}
+            onVerDetalle={setCodigoSeleccionado}
+          />
+        </>
       )}
-      <p>Mostrando {paisesFiltrados.length} de {paises.length} países</p>
-      <CountryList
-        paises={paisesFiltrados}
-        favoritos={favoritos}
-        onToggleFavorito={toggleFavorito}
-        onVerDetalle={setCodigoSeleccionado}
-      />
     </main>
   )
 }

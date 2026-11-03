@@ -28,3 +28,9 @@ body {
 .error {
   color: #b00020;
 }
+
+button.tarjeta {
+  cursor: pointer;
+  background: white;
+  font: inherit;
+}
